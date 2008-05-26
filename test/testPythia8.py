@@ -42,13 +42,8 @@ process.generator = cms.EDProducer("LHEProducer",
 	)
 )
 
-process.filter = cms.EDFilter("LHEFilter",
-	src = cms.InputTag("generator")
-)
-
 process.p0 = cms.Path(
 	process.generator *
-	process.filter *
 	process.pgen
 )
 
