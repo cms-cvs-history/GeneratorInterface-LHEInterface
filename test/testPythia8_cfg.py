@@ -1,4 +1,4 @@
-#!/bin/env cmsRun
+#!/usr/bin/env cmsRun
 import FWCore.ParameterSet.Config as cms
 
 process = cms.Process("Gen")
@@ -17,62 +17,28 @@ process.configurationMetadata = cms.untracked.PSet(
 
 process.load("Configuration.StandardSequences.Generator_cff")
 
-process.RandomNumberGeneratorService.moduleSeeds = cms.PSet(
-	generator = cms.untracked.uint32(123456789),
-	VtxSmeared = cms.untracked.uint32(98765432)
+process.RandomNumberGeneratorService.generator = cms.PSet(
+	initialSeed = cms.untracked.uint32(123456789),
+	engineName = cms.untracked.string('HepJamesRandom')
 )
 
 process.load("FWCore.MessageService.MessageLogger_cfi")
 process.MessageLogger.cerr.threshold = 'INFO'
 
-process.load("Configuration.Generator.PythiaUESettings_cfi")
-
 process.generator = cms.EDProducer("LHEProducer",
 	eventsToPrint = cms.untracked.uint32(1),
 
 	hadronisation = cms.PSet(
-		process.pythiaUESettingsBlock,
-
-		generator = cms.string('Pythia6'),
+		generator = cms.string('Pythia8'),
 
 		maxEventsToPrint = cms.untracked.int32(1),
 		pythiaPylistVerbosity = cms.untracked.int32(2),
 
-		parameterSets = cms.vstring(
-			'pythiaUESettings', 
-			'pythiaAlpgen'
-		),
+		parameterSets = cms.vstring('pythiaCMSDefaults'),
 
-		pythiaAlpgen = cms.vstring(
-			'PMAS(5,1)=1.5   ! c quark mass', 
-			'PMAS(5,1)=4.7   ! b quark mass', 
-			'PMAS(6,1)=175.0 ! t quark mass', 
-			'MSTP(32)=2      ! Q^2 = sum(m_T^2), iqopt = 1', 
-			'MSEL=0          ! User defined processes/Full user control'
+		pythiaCMSDefaults = cms.vstring(
+			'Check:event = off'
 		)
-	),
-
-	jetMatching = cms.untracked.PSet(
-		algorithm = cms.PSet(
-			protojetPtMin = cms.double(0.0),
-			name = cms.string('SISCone'),
-			coneOverlapThreshold = cms.double(0.75),
-			coneRadius = cms.double(0.5),
-			caching = cms.bool(False),
-			maxPasses = cms.int32(0),
-			splitMergeScale = cms.string('pttilde')
-		),
-
-		matchMode = cms.string('exclusive'),
-		jetPtMin = cms.double(30.0),
-		maxDeltaR = cms.double(0.5),
-		maxEta = cms.double(5.0),
-		useEt = cms.bool(True),
-		partonicFinalState = cms.bool(True),
-		excludedResonances = cms.vuint32(6),
-		excludedFromResonances = cms.vuint32(5, 21, 24),
-		onlyHardProcess = cms.bool(True),
-		tausAsJets = cms.bool(False)
 	)
 )
 
@@ -122,7 +88,6 @@ process.GEN = cms.OutputModule("PoolOutputModule",
 	SelectEvents = cms.untracked.PSet(SelectEvents = cms.vstring('p0')),
 	fileName = cms.untracked.string('test.root')
 )
-process.GEN.outputCommands.append("keep *_generator_*_*")
 
 process.outpath = cms.EndPath(process.GEN)
 

@@ -1,4 +1,4 @@
-#!/bin/env cmsRun
+#!/usr/bin/env cmsRun
 import FWCore.ParameterSet.Config as cms
 
 process = cms.Process("MatchingAnalysis")
@@ -18,10 +18,12 @@ process.TFileService = cms.Service("TFileService",
 )
 
 process.lheAnalyzer = cms.EDAnalyzer("LHEAnalyzer",
+	src = cms.InputTag('generator'),
+
 	jetInput = cms.PSet(
 		partonicFinalState = cms.bool(True),
-		excludedResonances = cms.vuint32(6)
-		excludedFromResonances = cms.vuint32(5, 21, 24),
+		excludedResonances = cms.vuint32(6),
+		excludedFromResonances = cms.vuint32(1, 2, 3, 4, 5, 21, 24),
 		onlyHardProcess = cms.bool(True),
 		tausAsJets = cms.bool(False),
 	),

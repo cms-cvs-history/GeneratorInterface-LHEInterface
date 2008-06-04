@@ -1,4 +1,4 @@
-#!/bin/env cmsRun
+#!/usr/bin/env cmsRun
 import FWCore.ParameterSet.Config as cms
 
 process = cms.Process("Gen")
@@ -17,9 +17,9 @@ process.configurationMetadata = cms.untracked.PSet(
 
 process.load("Configuration.StandardSequences.Generator_cff")
 
-process.RandomNumberGeneratorService.moduleSeeds = cms.PSet(
-	generator = cms.untracked.uint32(123456789),
-	VtxSmeared = cms.untracked.uint32(98765432)
+process.RandomNumberGeneratorService.generator = cms.PSet(
+	initialSeed = cms.untracked.uint32(123456789),
+	engineName = cms.untracked.string('HepJamesRandom')
 )
 
 process.load("FWCore.MessageService.MessageLogger_cfi")
@@ -29,15 +29,25 @@ process.generator = cms.EDProducer("LHEProducer",
 	eventsToPrint = cms.untracked.uint32(1),
 
 	hadronisation = cms.PSet(
-		generator = cms.string('Pythia8'),
+		generator = cms.string('Herwig6'),
 
 		maxEventsToPrint = cms.untracked.int32(1),
-		pythiaPylistVerbosity = cms.untracked.int32(2),
+		herwigVerbosity = cms.untracked.int32(2),
 
-		parameterSets = cms.vstring('pythiaCMSDefaults'),
+		parameterSets = cms.vstring(
+			'herwigCMSDefaults', 
+			'herwigAlpgen'
+		),
 
-		pythiaCMSDefaults = cms.vstring(
-			'Check:event = off'
+		herwigCMSDefaults = cms.vstring(
+			'PTJIM	 = 2.5', 
+			'JMRAD(73) = 0.57'
+		),
+
+		herwigAlpgen = cms.vstring(
+			'RMASS(4)  = 1.5', 
+			'RMASS(5)  = 4.7', 
+			'RMASS(6)  = 175'
 		)
 	)
 )

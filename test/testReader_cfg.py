@@ -1,11 +1,10 @@
-#!/bin/env cmsRun
+#!/usr/bin/env cmsRun
 import FWCore.ParameterSet.Config as cms
 
 process = cms.Process("LHE")
 
-process.source = cms.Source("MCDBSource",
-	articleID = cms.uint32(120),
-	supportedProtocols = cms.vstring('gsiftp')
+process.source = cms.Source("LHESource",
+	fileNames = cms.untracked.vstring('file:ttbar.lhe')
 )
 
 process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))

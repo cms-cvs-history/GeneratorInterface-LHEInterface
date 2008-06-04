@@ -1,4 +1,4 @@
-#!/bin/env cmsRun
+#!/usr/bin/env cmsRun
 import FWCore.ParameterSet.Config as cms
 
 process = cms.Process("Gen")
@@ -11,9 +11,9 @@ process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(100))
 
 process.load("Configuration.StandardSequences.Generator_cff")
 
-process.RandomNumberGeneratorService.moduleSeeds = cms.PSet(
-	generator = cms.untracked.uint32(123456789),
-	VtxSmeared = cms.untracked.uint32(98765432)
+process.RandomNumberGeneratorService.generator = cms.PSet(
+	initialSeed = cms.untracked.uint32(123456789),
+	engineName = cms.untracked.string('HepJamesRandom')
 )
 
 process.load("FWCore.MessageService.MessageLogger_cfi")
@@ -92,6 +92,7 @@ process.GEN = cms.OutputModule("PoolOutputModule",
 	SelectEvents = cms.untracked.PSet(SelectEvents = cms.vstring('p0')),
 	fileName = cms.untracked.string('test.root')
 )
+process.GEN.outputCommands.append('keep *_generator_*_*')
 
 process.outpath = cms.EndPath(process.GEN)
 
