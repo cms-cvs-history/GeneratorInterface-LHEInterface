@@ -15,7 +15,7 @@ process.configurationMetadata = cms.untracked.PSet(
 	annotation = cms.untracked.string("ttbar")
 )
 
-process.load("Configuration.StandardSequences.Generator_cff")
+process.load("Configuration.StandardSequences.Services_cff")
 
 process.RandomNumberGeneratorService.generator = cms.PSet(
 	initialSeed = cms.untracked.uint32(123456789),
@@ -52,6 +52,8 @@ process.generator = cms.EDProducer("LHEProducer",
 	)
 )
 
+process.load("Configuration.StandardSequences.Generator_cff")
+
 process.p0 = cms.Path(
 	process.generator *
 	process.pgen
@@ -76,7 +78,7 @@ process.load("Configuration.StandardSequences.Simulation_cff")
 process.load("Configuration.StandardSequences.MixingNoPileUp_cff")
 
 process.g4SimHits.Generator.HepMCProductLabel = 'generator'
-process.trackingtruthprod.HepMCDataLabels.append('generator')
+process.mergedtruth.HepMCDataLabels.append('generator')
 
 process.load("Configuration.StandardSequences.L1Emulator_cff")
 process.load("Configuration.StandardSequences.DigiToRaw_cff")
