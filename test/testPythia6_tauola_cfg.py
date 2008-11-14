@@ -115,4 +115,4 @@ process.GEN.outputCommands.append("keep *_generator_*_*")
 
 process.outpath = cms.EndPath(process.GEN)
 
-process.schedule = cms.Schedule(process.p0, process.p, process.outpath)
+process.schedule = cms.Schedule(process.p0, process.outpath)
