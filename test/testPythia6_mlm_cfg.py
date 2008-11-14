@@ -50,6 +50,29 @@ process.generator = cms.EDProducer("LHEProducer",
 			'MSTP(32)=2      ! Q^2 = sum(m_T^2), iqopt = 1', 
 			'MSEL=0          ! User defined processes/Full user control'
 		)
+	),
+
+	jetMatching = cms.untracked.PSet(
+		algorithm = cms.PSet(
+			protojetPtMin = cms.double(0.0),
+			name = cms.string('SISCone'),
+			coneOverlapThreshold = cms.double(0.75),
+			coneRadius = cms.double(0.5),
+			caching = cms.bool(False),
+			maxPasses = cms.int32(0),
+			splitMergeScale = cms.string('pttilde')
+		),
+
+		matchMode = cms.string('exclusive'),
+		jetPtMin = cms.double(30.0),
+		maxDeltaR = cms.double(0.5),
+		maxEta = cms.double(5.0),
+		useEt = cms.bool(True),
+		partonicFinalState = cms.bool(True),
+		excludedResonances = cms.vuint32(6),
+		excludedFromResonances = cms.vuint32(1, 2, 3, 4, 5, 21, 24),
+		onlyHardProcess = cms.bool(True),
+		tausAsJets = cms.bool(False)
 	)
 )
 
@@ -105,4 +128,4 @@ process.GEN.outputCommands.append("keep *_generator_*_*")
 
 process.outpath = cms.EndPath(process.GEN)
 
-process.schedule = cms.Schedule(process.p0, process.p, process.outpath)
+process.schedule = cms.Schedule(process.p0, process.outpath)

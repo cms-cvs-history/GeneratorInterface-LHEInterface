@@ -26,6 +26,7 @@ process.load("FWCore.MessageService.MessageLogger_cfi")
 process.MessageLogger.cerr.threshold = 'INFO'
 
 process.load("Configuration.Generator.PythiaUESettings_cfi")
+process.load("GeneratorInterface.Pythia6Interface.TauolaSettings_cff")
 
 process.generator = cms.EDProducer("LHEProducer",
 	eventsToPrint = cms.untracked.uint32(1),
@@ -49,6 +50,15 @@ process.generator = cms.EDProducer("LHEProducer",
 			'PMAS(6,1)=175.0 ! t quark mass', 
 			'MSTP(32)=2      ! Q^2 = sum(m_T^2), iqopt = 1', 
 			'MSEL=0          ! User defined processes/Full user control'
+		),
+
+		externalGenerators = cms.PSet(
+			parameterSets = cms.vstring("Tauola"),
+
+			Tauola = cms.PSet(
+				process.TauolaPolar,
+				process.TauolaDefaultInputCards
+			)
 		)
 	)
 )
