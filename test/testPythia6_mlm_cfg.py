@@ -64,7 +64,7 @@ process.generator = cms.EDProducer("LHEProducer",
 		),
 
 		matchMode = cms.string('exclusive'),
-		jetPtMin = cms.double(30.0),
+		jetPtMin = cms.double(15.0),
 		maxDeltaR = cms.double(0.5),
 		maxEta = cms.double(5.0),
 		useEt = cms.bool(True),
