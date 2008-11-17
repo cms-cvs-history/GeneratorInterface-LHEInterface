@@ -66,7 +66,14 @@ process.genEventWeight.src = 'generator'
 process.genEventScale.src = 'generator'
 process.genEventPdfInfo.src = 'generator'
 process.genParticles.src = 'generator'
-process.genParticleCandidates.src = 'generator'
+try:
+	process.genParticleCandidates.src = 'generator'
+except:
+	pass
+try:
+	process.genEventProdID.src = 'generator'
+except:
+	pass
 
 process.genParticles.abortOnUnknownPDGCode = False
 

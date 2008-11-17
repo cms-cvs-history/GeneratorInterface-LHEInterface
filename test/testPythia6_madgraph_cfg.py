@@ -4,10 +4,10 @@ import FWCore.ParameterSet.Config as cms
 process = cms.Process("Gen")
 
 process.source = cms.Source("LHESource",
-	fileNames = cms.untracked.vstring('file:ttbar.lhe')
+	fileNames = cms.untracked.vstring('file:tt1j.lhe')
 )
 
-process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(100))
+#process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(100))
 
 process.configurationMetadata = cms.untracked.PSet(
 	version = cms.untracked.string('alpha'),
@@ -53,28 +53,13 @@ process.generator = cms.EDProducer("LHEProducer",
 	),
 
 	jetMatching = cms.untracked.PSet(
-		scheme = cms.string("MLM"),
+		scheme = cms.string("Madgraph"),
 
-		algorithm = cms.PSet(
-			protojetPtMin = cms.double(0.0),
-			name = cms.string('SISCone'),
-			coneOverlapThreshold = cms.double(0.75),
-			coneRadius = cms.double(0.5),
-			caching = cms.bool(False),
-			maxPasses = cms.int32(0),
-			splitMergeScale = cms.string('pttilde')
-		),
-
-		matchMode = cms.string('exclusive'),
-		jetPtMin = cms.double(15.0),
-		maxDeltaR = cms.double(0.5),
-		maxEta = cms.double(5.0),
-		useEt = cms.bool(True),
-		partonicFinalState = cms.bool(True),
-		excludedResonances = cms.vuint32(6),
-		excludedFromResonances = cms.vuint32(1, 2, 3, 4, 5, 21, 24),
-		onlyHardProcess = cms.bool(True),
-		tausAsJets = cms.bool(False)
+		mode = cms.string("auto"),
+		etaclmax = cms.double(5.0),
+		qcut = cms.double(30.0),
+		minjets = cms.int32(0),
+		maxjets = cms.int32(3)
 	)
 )
 
