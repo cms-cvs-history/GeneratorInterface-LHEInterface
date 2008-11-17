@@ -4,7 +4,7 @@ import FWCore.ParameterSet.Config as cms
 process = cms.Process("Gen")
 
 process.source = cms.Source("LHESource",
-	fileNames = cms.untracked.vstring('file:tt1j.lhe')
+	fileNames = cms.untracked.vstring('file:events.lhe')
 )
 
 #process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(100))
@@ -40,15 +40,15 @@ process.generator = cms.EDProducer("LHEProducer",
 
 		parameterSets = cms.vstring(
 			'pythiaUESettings', 
-			'pythiaAlpgen'
+			'pythiaCMSDefaults'
 		),
 
-		pythiaAlpgen = cms.vstring(
-			'PMAS(5,1)=1.5   ! c quark mass', 
-			'PMAS(5,1)=4.7   ! b quark mass', 
-			'PMAS(6,1)=175.0 ! t quark mass', 
-			'MSTP(32)=2      ! Q^2 = sum(m_T^2), iqopt = 1', 
-			'MSEL=0          ! User defined processes/Full user control'
+		 pythiaCMSDefaults = cms.vstring(
+			'PMAS(5,1)=4.4  ! b quarks mass', 
+			'PMAS(6,1)=172.4  ! t quarks mass', 
+			'MSTJ(1)=1      !...Fragmentation/hadronization on or off', 
+			'MSTP(61)=1     ! Parton showering on or off', 
+			'MSEL=0         ! User defined processes/Full user control'
 		)
 	),
 
