@@ -61,21 +61,6 @@ process.p0 = cms.Path(
 
 process.load("Configuration.StandardSequences.VtxSmearedBetafuncEarlyCollision_cff")
 
-process.VtxSmeared.src = 'generator'
-process.genEventWeight.src = 'generator'
-process.genEventScale.src = 'generator'
-process.genEventPdfInfo.src = 'generator'
-process.genEventProcID.src = 'generator'
-process.genParticles.src = 'generator'
-try:
-	process.genParticleCandidates.src = 'generator'
-except:
-	pass
-try:
-	process.genEventProdID.src = 'generator'
-except:
-	pass
-
 process.genParticles.abortOnUnknownPDGCode = False
 
 process.load("Configuration.StandardSequences.Geometry_cff")
@@ -84,9 +69,6 @@ process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
 
 process.load("Configuration.StandardSequences.Simulation_cff")
 process.load("Configuration.StandardSequences.MixingNoPileUp_cff")
-
-process.g4SimHits.Generator.HepMCProductLabel = 'generator'
-process.mergedtruth.HepMCDataLabels.append('generator')
 
 process.load("Configuration.StandardSequences.L1Emulator_cff")
 process.load("Configuration.StandardSequences.DigiToRaw_cff")
@@ -115,8 +97,6 @@ process.GENSIMDIGIL1RAW = cms.OutputModule("PoolOutputModule",
 	SelectEvents = cms.untracked.PSet(SelectEvents = cms.vstring('p0')),
 	fileName = cms.untracked.string('raw.root')
 )
-process.GENSIMDIGIL1RAW.outputCommands.append('keep *_source_*_*')
-process.GENSIMDIGIL1RAW.outputCommands.append('keep *_generator_*_*')
 
 process.outpath = cms.EndPath(process.GENSIMDIGIL1RAW)
 

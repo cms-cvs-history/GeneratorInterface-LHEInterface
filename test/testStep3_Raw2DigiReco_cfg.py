@@ -29,8 +29,6 @@ process.RECO = cms.OutputModule("PoolOutputModule",
 	dataset = cms.untracked.PSet(dataTier = cms.untracked.string('RECO')),
 	fileName = cms.untracked.string('reco.root')
 )
-process.RECO.outputCommands.append('keep *_source_*_*')
-process.RECO.outputCommands.append('keep *_generator_*_*')
 
 process.outpath = cms.EndPath(process.RECO)
 
